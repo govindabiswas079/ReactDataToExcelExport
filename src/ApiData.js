@@ -7,12 +7,32 @@ import ReactHtmlTableToExcel from 'react-html-table-to-excel';
 const ApiData = () => {
     const [users, setUsers] = useState([]);
 
+
+
+    var config = {
+        method: 'get',
+        url: 'http://localhost:3001/users',
+        headers: { 'content-type': 'appication-json' }
+    };
+
     const UserData = async () => {
-        const result = await axios.get('http://localhost:3001/users');
-        setUsers(result.data);
-        /* console.log(result); */
+        axios(config)
+            .then(function (respons) {
+                console.log(JSON.stringify(respons.data));
+                setUsers(respons.data);
+            })
+            .catch(function (error) {
+                console.log(error)
+            });
 
     }
+
+    /* const UserData = async () => {
+        const result = await axios.get('http://localhost:3001/users');
+        setUsers(result.data);
+        
+
+    } */
 
     useEffect(() => {
         UserData();
